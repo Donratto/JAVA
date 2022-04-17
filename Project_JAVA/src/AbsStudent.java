@@ -1,20 +1,19 @@
 import java.time.LocalDate;
-import java.util.HashMap;
+import java.util.LinkedList;
 
 public abstract class AbsStudent {
     
     private int id;
-    private String firstName;
-    private String secondName;
+    private String firstName, secondName;
     private LocalDate birthDate;
-    private HashMap<String, Integer> grades;
+    private LinkedList<Integer> grades;
 
     public AbsStudent(int id, String firstName, String secondName, LocalDate birthDate) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
         this.birthDate = birthDate;
-        this.grades = new HashMap<String, Integer>();
+        this.grades = new LinkedList<Integer>();
     }
 
 
@@ -43,19 +42,41 @@ public abstract class AbsStudent {
         return birthDate;
     }
     public void setBirthDate(String date) {
+        try {
         this.birthDate = LocalDate.parse(date);
+        }
+        catch (Exception e) {
+            System.err.println("Wrong format of date\nuse format: 'yyyy-mm-dd'");
+        }
     }
 
-    public Integer getGrade(String subject) {
-        return grades.get(subject);
+    public Integer getGrade(Integer idx) {
+        return grades.get(idx);
     }
-    public void setGrade(String subject, Integer number) {
-        this.grades.put(subject, number);
+    public void setGrade(Integer idx, Integer number) {
+        if(number>=1 || number<=5) {
+            this.grades.set(idx, number);
+        }
+        else {
+            badInput();
+        }
     }
-    public void deleteGrade(String subject) {
-        this.grades.remove(subject);
+    public void addGrade(Integer number) {
+        if(number>=1 || number<=5) {
+            this.grades.add(number);
+        }
+        else {
+            badInput();
+        }
+        
+    }
+    public void deleteGrade(Integer idx) {
+        this.grades.remove(idx);
     }
 
+    private void badInput() {
+        System.err.println("Enter only one number from: {1, 2, 3, 4, 5}");
+    }
 
 
 }
