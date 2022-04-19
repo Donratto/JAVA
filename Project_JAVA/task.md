@@ -34,6 +34,7 @@ Program musí dále obsahovat následující:
 - [x] Alespoň jednu abstraktní třídu nebo rozhraní
 - [x] Alespoň jednu dynamickou datovou strukturu
 
+<br /> 
 
 <style type="text/css">
     ol { list-style-type: lower-alpha; }
