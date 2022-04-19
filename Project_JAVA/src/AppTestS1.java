@@ -2,7 +2,7 @@ import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class App {
+public class AppTestS1 {
     public static void main(String[] args) throws Exception {
         Scanner sc = new Scanner(System.in);
         System.out.println("Hello, World!");
@@ -24,7 +24,7 @@ public class App {
         Alex.addGrade(IntInput(sc,1));
         }
         */
-        Alex.addGrade(IntInput(sc,1));
+        Alex.addGrade(AbsStudent.IntInput(sc,1));
         System.out.println();
         System.out.println(Alex.getAverage());
         System.out.println();
@@ -115,7 +115,7 @@ public class App {
 		return number;
 	}
 
-    
+    /*
     public static int IntInput(Scanner sc, int i) 
 	{
 		int number = 0;
@@ -143,7 +143,7 @@ public class App {
         }
 		return number;
 	}
-    /*
+    
     public static int IntInput(Scanner sc, int i) 
 	{
 		int number = 0;

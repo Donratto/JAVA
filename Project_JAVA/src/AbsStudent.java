@@ -1,5 +1,7 @@
 import java.time.LocalDate;
+import java.util.InputMismatchException;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 public abstract class AbsStudent {
     
@@ -99,6 +101,68 @@ public abstract class AbsStudent {
     private void badInput() {
         System.err.println("Enter only one number from: {1, 2, 3, 4, 5}");
     }
+
+    public static int IntInput(Scanner sc, int i) 
+	{
+		int number = 0;
+		try
+		{
+            System.out.printf("enter int: ");
+            number = sc.nextInt();
+            if((number < 1 || number > 5)) {
+                throw new grade_exception();
+            } 
+		}
+		catch(InputMismatchException e)
+		{
+			System.out.println("Exception has occured: "+e.toString());
+			System.out.printf("Enter only integers: \n");
+			sc.nextLine();
+			number = IntInput(sc,1);
+		}
+        catch(grade_exception e) 
+        {
+            System.out.println("chytám: " +e.toString());
+            System.out.printf("Enter only one number from: {1, 2, 3, 4, 5}: \n");
+            sc.nextLine();
+            number = IntInput(sc,1);
+        }
+		return number;
+	}
+
+    public static int IntInput(Scanner sc) 
+	{
+		int number = 0;
+		try
+		{
+			number = sc.nextInt();
+		}
+		catch(Exception e)
+		{
+			System.out.println("Exception has occured: "+e.toString());
+			System.out.printf("Enter only integers: \n");
+			sc.nextLine();
+			number = IntInput(sc);
+		}
+		return number;
+	}
+
+    public static LocalDate DateInput(Scanner sc) 
+	{
+		LocalDate date = null;
+		try
+		{
+			date = LocalDate.parse(sc.next());
+		}
+		catch(Exception e)
+		{
+			System.out.println("Exception has occured: "+e.toString());
+			System.out.printf("Wrong format of date\nuse format: 'yyyy-mm-dd'\n");
+			sc.nextLine();
+			date = DateInput(sc);
+		}
+		return date;
+	}
 
 
 }
