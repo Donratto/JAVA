@@ -55,9 +55,13 @@ public abstract class AbsStudent {
     }
 
     public Integer getGrade(Integer idx) {
+        try {
         return grades.get(idx);
+        } catch(IndexOutOfBoundsException e) {
+            return null;
+        }
     }
-    public void setGrade(Integer idx, Integer number) {
+    public void setGrade(Integer idx, Integer number) throws grade_exception{
         if(number >= 1 && number <= 5) {
             this.grades.set(idx, number);
         }
@@ -66,6 +70,7 @@ public abstract class AbsStudent {
         }
     }
     public void addGrade(Integer number) {
+        System.out.println("převzato: "+number);
         if(number >= 1 && number <= 5) {
             this.grades.add(number);
         }
@@ -74,9 +79,13 @@ public abstract class AbsStudent {
         }
         
     }
-    public void deleteGrade(Integer idx) {
+    public void deleteGrade(int idx) {
         this.grades.remove(idx);
     }
+    public int sizeGrades() {
+        return grades.size();
+    }
+    
 
     public double getAverage() {
         for (int i = 0; i < grades.size(); i++) {
@@ -84,6 +93,7 @@ public abstract class AbsStudent {
         }
         return sumGrades/(grades.size());
     }
+
 
 
     private void badInput() {
