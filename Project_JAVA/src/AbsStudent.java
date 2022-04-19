@@ -7,6 +7,7 @@ public abstract class AbsStudent {
     private String firstName, secondName;
     private LocalDate birthDate;
     private LinkedList<Integer> grades;
+    private double sumGrades;
 
     public AbsStudent(int id, String firstName, String secondName, LocalDate birthDate) {
         this.id = id;
@@ -49,12 +50,15 @@ public abstract class AbsStudent {
             System.err.println("Wrong format of date\nuse format: 'yyyy-mm-dd'");
         }
     }
+    public void setBirthDate(LocalDate date) {
+        this.birthDate = date;
+    }
 
     public Integer getGrade(Integer idx) {
         return grades.get(idx);
     }
     public void setGrade(Integer idx, Integer number) {
-        if(number>=1 || number<=5) {
+        if(number >= 1 && number <= 5) {
             this.grades.set(idx, number);
         }
         else {
@@ -62,7 +66,7 @@ public abstract class AbsStudent {
         }
     }
     public void addGrade(Integer number) {
-        if(number>=1 || number<=5) {
+        if(number >= 1 && number <= 5) {
             this.grades.add(number);
         }
         else {
@@ -73,6 +77,14 @@ public abstract class AbsStudent {
     public void deleteGrade(Integer idx) {
         this.grades.remove(idx);
     }
+
+    public double getAverage() {
+        for (int i = 0; i < grades.size(); i++) {
+            sumGrades += grades.get(i);
+        }
+        return sumGrades/(grades.size());
+    }
+
 
     private void badInput() {
         System.err.println("Enter only one number from: {1, 2, 3, 4, 5}");

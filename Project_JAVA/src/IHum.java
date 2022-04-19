@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+
 public interface IHum {
-    public String isZodiacSign();
+    public ZodiacSigns isZodiacSign(LocalDate birthDate);
 }

@@ -1,7 +1,8 @@
+
 import java.time.LocalDate;
 
 public class TechnicalStudy extends AbsStudent implements ITech{
-    private boolean isLeap;
+    
 
 
 
@@ -13,8 +14,7 @@ public class TechnicalStudy extends AbsStudent implements ITech{
 
     @Override
     public boolean isLeapYear_Birth(LocalDate birthDate) {
-        
-        return isLeap;
+        return birthDate.isLeapYear();
     }
 
 
