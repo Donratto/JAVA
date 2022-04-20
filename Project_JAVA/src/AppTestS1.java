@@ -14,7 +14,7 @@ public class AppTestS1 {
 
 
         System.out.println(Alex.getBirthDate()); 
-        System.out.println(Alex.getSecondtName()); 
+        System.out.println(Alex.getSecondName()); 
         System.out.println(Alex.getFirstName()); 
         System.out.println(Alex.getId()); 
         System.out.println();

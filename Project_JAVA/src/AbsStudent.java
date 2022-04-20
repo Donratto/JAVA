@@ -34,7 +34,7 @@ public abstract class AbsStudent {
         this.firstName = name;
     }
 
-    public String getSecondtName() {
+    public String getSecondName() {
         return secondName;
     }
     public void setSecondName(String name) {
