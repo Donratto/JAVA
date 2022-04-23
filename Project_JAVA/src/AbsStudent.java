@@ -9,7 +9,7 @@ public abstract class AbsStudent {
     private String firstName, secondName;
     private LocalDate birthDate;
     private LinkedList<Integer> grades;
-    private double sumGrades;
+    
 
     public AbsStudent(int id, String firstName, String secondName, LocalDate birthDate) {
         this.id = id;
@@ -96,6 +96,7 @@ public abstract class AbsStudent {
     
 
     public double getAverage() {
+        double sumGrades = 0;
         for (int i = 0; i < grades.size(); i++) {
             sumGrades += grades.get(i);
         }
