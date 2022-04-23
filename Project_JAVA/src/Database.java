@@ -4,7 +4,7 @@ import java.util.HashMap;
 public class Database {
     
     private HashMap<Integer, Object> TheDatabase;
-    static int numberOfStudents = 0;
+    public static int numberOfStudents = 0;
 
     public Database() {
         TheDatabase = new HashMap<Integer, Object>();
@@ -69,6 +69,26 @@ public class Database {
       }else if(type == "TechnicalStudy"){
         ((TechnicalStudy) getStudent(id)).isLeapYear_Birth(((AbsStudent) getStudent(id)).getBirthDate());
       }
+    }
+
+    public String skillStudent03(int id) {
+      var type = getStudent(id);
+      String internal01 = "";
+      String internal02 = "";
+
+      if(type instanceof CombinedStudy) {
+        internal01 = ""+ ((CombinedStudy) getStudent(id)).isLeapYear_Birth(((AbsStudent)getStudent(id)).getBirthDate());
+        internal02 = ""+ ((CombinedStudy) getStudent(id)).isZodiacSign(((AbsStudent) getStudent(id)).getBirthDate());
+        return "Birth year is a leapyear: "+internal01+"\nZodiac sign is: "+internal02;
+      } else if(type instanceof HumanitarianStudy) {
+        internal02 = ""+ ((HumanitarianStudy) getStudent(id)).isZodiacSign(((AbsStudent) getStudent(id)).getBirthDate());
+        return "Zodiac sign is: "+internal02;
+      }else if(type instanceof TechnicalStudy){
+        internal01 = ""+ ((TechnicalStudy) getStudent(id)).isLeapYear_Birth(((AbsStudent) getStudent(id)).getBirthDate());
+        return "Birth year is a leapyear: "+internal01;
+      }
+
+      return "Birth year is leapyear: "+internal01;
     }
 
 

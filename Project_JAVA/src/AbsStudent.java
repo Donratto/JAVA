@@ -72,7 +72,7 @@ public abstract class AbsStudent {
         }
     }
     public void addGrade(Integer number) {
-        System.out.println("převzato: "+number);
+        //System.out.println("převzato: "+number);
         if(number >= 1 && number <= 5) {
             this.grades.add(number);
         }
@@ -86,6 +86,12 @@ public abstract class AbsStudent {
     }
     public int sizeGrades() {
         return grades.size();
+    }
+    public void listGrades() {
+        for (int i = 0; i < grades.size(); i++) {
+            System.out.print(grades.get(i)+" ");
+        }
+        System.out.println();
     }
     
 

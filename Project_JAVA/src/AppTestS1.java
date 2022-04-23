@@ -9,8 +9,8 @@ public class AppTestS1 {
 
 //test technik 
         
-        //var Alex = new TechnicalStudy(1, "Alex", "Halex", DateInput(sc) );
-        var Alex = new TechnicalStudy(1, "Alex", "Halex", LocalDate.parse("2000-07-06") );
+        var Alex = new TechnicalStudy(1, "Alex", "Halex", AbsStudent.DateInput(sc) );
+        //var Alex = new TechnicalStudy(1, "Alex", "Halex", LocalDate.parse("2000-07-06") );
 
 
         System.out.println(Alex.getBirthDate()); 
@@ -18,21 +18,19 @@ public class AppTestS1 {
         System.out.println(Alex.getFirstName()); 
         System.out.println(Alex.getId()); 
         System.out.println();
-        /*
+        
         for (int i = 0; i < 4; i++) {
         System.out.println("enter grade number " + (i+1));
-        Alex.addGrade(IntInput(sc,1));
-        }
-        */
         Alex.addGrade(AbsStudent.IntInput(sc,1));
+        }
+        
+        
         System.out.println();
         System.out.println(Alex.getAverage());
         System.out.println();
         System.out.println(Alex.isLeapYear_Birth(Alex.getBirthDate()));
         System.out.println();
-        for (int i = 0; i < Alex.sizeGrades(); i++) {
-            System.out.println(Alex.getGrade(i));
-        }
+        Alex.listGrades();
         /*
         System.out.println("deletion of index 1"); Alex.deleteGrade(1);
         for (int i = 0; i < 4; i++) {
