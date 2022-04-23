@@ -94,13 +94,34 @@ public abstract class AbsStudent {
         System.out.println();
     }
     
-
+    /*
     public double getAverage() {
         double sumGrades = 0;
+        try{
         for (int i = 0; i < grades.size(); i++) {
             sumGrades += grades.get(i);
         }
         return sumGrades/(grades.size());
+    } catch(Exception e){
+        System.out.println(e.toString());
+        return 0;
+    }
+    }
+    */
+
+    public double getAverage() {
+        double sumGrades = 0;
+        if (grades.size()==0) return 0;
+        try{
+        for (int i = 0; i < grades.size(); i++) {
+            sumGrades += grades.get(i);
+        }
+        return sumGrades/(grades.size());
+    } catch(ArithmeticException e){
+        return 0;
+    } catch(NullPointerException e) {
+        return 0;
+    }
     }
 
 

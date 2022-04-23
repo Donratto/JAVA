@@ -40,19 +40,21 @@ public class AppTestS2 {
         ((AbsStudent)db.getStudent(0)).listGrades();
         db.stalkStudent(0);
         ((AbsStudent)db.getStudent(0)).listGrades();
-            /*
+            
         db.addStudent(2, "haf", "hig", LocalDate.parse("2000-07-06"));
         db.addStudent(3, "dif", "fid", LocalDate.parse("2000-07-06"));
         db.addStudent(1, "as", "dasds", LocalDate.parse("2000-07-06"));
         db.addStudent(3, "asas", "sfa", LocalDate.parse("2000-07-06"));
         db.listOfStudents();
-        db.deleteStudent(0);
-        db.deleteStudent(4);
-        db.deleteStudent(2);
+        //db.deleteStudent(0);
+        //db.deleteStudent(4);
+        //db.deleteStudent(2);
+        //db.listOfStudents();
+        db.addStudent(1, "as", "zasd", LocalDate.parse("2000-07-06"));
+        db.addStudent(1, "as", "aaaasd", LocalDate.parse("2000-07-06"));
         db.listOfStudents();
-        db.addStudent(1, "as", "dasds", LocalDate.parse("2000-07-06"));
-        db.listOfStudents();
-        */
+        db.sNameSort();
+        db.generalAverage();
         
     }
 }

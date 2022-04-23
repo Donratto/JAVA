@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Database {
@@ -48,12 +49,14 @@ public class Database {
     //d)?
     
     public void stalkStudent(int id) {
+      if(((AbsStudent)getStudent(id))!=null) {
         String fName = ((AbsStudent)getStudent(id)).getFirstName();
         String sName = ((AbsStudent)getStudent(id)).getSecondName();
         String birthYear = ""+((AbsStudent)TheDatabase.get(id)).getBirthDate().getYear();
         double avg = ((AbsStudent) TheDatabase.get(id)).getAverage();
         String type = TheDatabase.get(id).getClass().toString();
-        if(((AbsStudent)getStudent(id))!=null) System.out.printf("Student: {ID=%d} {firstname=%s} {secondname=%s} {year of birth=%s} {average grade=%4.3f} {type=%s}",id,fName,sName,birthYear,avg,type);
+        System.out.printf("Student: {ID=%d} {firstname=%s} {secondname=%s} {year of birth=%s} {average grade=%4.3f} {type=%s}",id,fName,sName,birthYear,avg,type);
+      }
     }
     
     public void listOfStudents() {
@@ -126,7 +129,67 @@ public class Database {
     //f)
 
     public void sNameSort() {
-      
+      ArrayList<TechnicalStudy> technicalStudies = new ArrayList<>();
+      ArrayList<HumanitarianStudy> humanitarianStudies = new ArrayList<>();
+      ArrayList<CombinedStudy> combinedStudies = new ArrayList<>();
+      for(int id = 0; id < numberOfStudents; id++) {
+        if(getStudent(id) instanceof TechnicalStudy) {
+          technicalStudies.add((TechnicalStudy) getStudent(id));
+        } else if (getStudent(id) instanceof HumanitarianStudy) {
+          humanitarianStudies.add((HumanitarianStudy) getStudent(id));
+        } else if (getStudent(id) instanceof CombinedStudy) {
+          combinedStudies.add((CombinedStudy) getStudent(id));
+        }
+      }
+      technicalStudies.sort((o1, o2) -> o1.getSecondName().compareTo(o2.getSecondName()));
+      System.err.println("Students of Technical Studies:");
+        for (TechnicalStudy student: technicalStudies){
+          System.out.printf("Student: {ID=%d} {firstname=%s} {secondname=%s} {year of birth=%s} {average grade=%4.3f}\n",student.getId(),student.getFirstName(),student.getSecondName(),student.getBirthDate(),student.getAverage());
+      }
+      humanitarianStudies.sort((o1, o2) -> o1.getSecondName().compareTo(o2.getSecondName()));
+      System.err.println("Students of Humanitarian Studies:");
+        for (HumanitarianStudy student: humanitarianStudies){
+          System.out.printf("Student: {ID=%d} {firstname=%s} {secondname=%s} {year of birth=%s} {average grade=%4.3f}\n",student.getId(),student.getFirstName(),student.getSecondName(),student.getBirthDate(),student.getAverage());
+      }
+      combinedStudies.sort((o1, o2) -> o1.getSecondName().compareTo(o2.getSecondName()));
+      System.err.println("Students of Combined Studies:");
+        for (CombinedStudy student: combinedStudies){
+          System.out.printf("Student: {ID=%d} {firstname=%s} {secondname=%s} {year of birth=%s} {average grade=%4.3f}\n",student.getId(),student.getFirstName(),student.getSecondName(),student.getBirthDate(),student.getAverage());
+      }
     }
   
+    
+    //g)
+    
+    public void generalAverage() {
+      double sumTech=0, sumHum= 0;
+      int numberOfTech=0, numberOfHum=0;
+      for(int id = 0; id < numberOfStudents; id++) {
+        if(getStudent(id)==null) continue;
+        if (getStudent(id) instanceof TechnicalStudy || getStudent(id) instanceof CombinedStudy) {
+          if(!(((AbsStudent)getStudent(id)).getAverage()==0)) { 
+            sumTech =+ ((AbsStudent)getStudent(id)).getAverage();
+            numberOfTech++; }
+        } else if (getStudent(id) instanceof HumanitarianStudy || getStudent(id) instanceof CombinedStudy) {
+          if(!(((AbsStudent)getStudent(id)).getAverage()==0)) {
+            sumHum =+ ((AbsStudent)getStudent(id)).getAverage();
+            numberOfHum++; }
+        }
+      }
+      try {
+      if(numberOfTech>0) {
+          System.out.printf("General average grades from Technical Studies is: %4,3f\n", (sumTech/numberOfTech));
+      } else {
+        System.out.println("There are no students in Technical Studies");
+      }
+      if(numberOfHum>0) { 
+        System.out.printf("General average grades from Humanitarian Studies is: %4,3f\n", (sumHum/numberOfHum));
+      } else {
+        System.out.println("There are no students in Humanitarian Studies");
+      }
+      } catch(ArithmeticException e) {
+
+      }
+    }
+
   }
