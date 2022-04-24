@@ -168,28 +168,77 @@ public class Database {
         if(getStudent(id)==null) continue;
         if (getStudent(id) instanceof TechnicalStudy || getStudent(id) instanceof CombinedStudy) {
           if(!(((AbsStudent)getStudent(id)).getAverage()==0)) { 
-            sumTech =+ ((AbsStudent)getStudent(id)).getAverage();
+            sumTech =+ (Double)((AbsStudent)getStudent(id)).getAverage();
+            System.out.println("debilTECH "+id+" "+((AbsStudent)getStudent(id)).getAverage());
             numberOfTech++; }
         } else if (getStudent(id) instanceof HumanitarianStudy || getStudent(id) instanceof CombinedStudy) {
           if(!(((AbsStudent)getStudent(id)).getAverage()==0)) {
-            sumHum =+ ((AbsStudent)getStudent(id)).getAverage();
+            sumHum =+ (double)((AbsStudent)getStudent(id)).getAverage();
+            System.out.println("debilHUM "+id+" "+((AbsStudent)getStudent(id)).getAverage());
             numberOfHum++; }
         }
       }
       try {
       if(numberOfTech>0) {
-          System.out.printf("General average grades from Technical Studies is: %4,3f\n", (sumTech/numberOfTech));
+          System.out.printf("General average grades from Technical Studies is: %4.3f\n", ((Double)sumTech/numberOfTech));
       } else {
         System.out.println("There are no students in Technical Studies");
       }
       if(numberOfHum>0) { 
-        System.out.printf("General average grades from Humanitarian Studies is: %4,3f\n", (sumHum/numberOfHum));
+        System.out.printf("General average grades from Humanitarian Studies is: %4.3f\n", ((Double)sumHum/numberOfHum));
       } else {
         System.out.println("There are no students in Humanitarian Studies");
       }
-      } catch(ArithmeticException e) {
-
+      } catch(Exception e) {
+        System.out.println("buf!!");
+        System.err.println(e.toString());
+        System.out.println(numberOfTech);
+        System.out.println(sumTech);
+        System.out.println(numberOfHum);
+        System.out.println(sumHum);
       }
+    }
+    
+
+
+    public void generalAvgTech() {
+      int numberTech = 0, numberHum = 0;
+      double sumTech = 0.0, sumHum =0.0;
+      double prumTech = 0, prumHum = 0;
+      for(int id = 0; id < numberOfStudents; id++) {
+        if(getStudent(id)==null) continue;
+        if(((AbsStudent)getStudent(id)).getAverage()==0) continue;
+        if((getStudent(id) instanceof TechnicalStudy) || (getStudent(id) instanceof CombinedStudy)) {
+          numberTech++;
+          sumTech = sumTech + ((AbsStudent)getStudent(id)).getAverage();
+          System.out.println("Tech pridano "+numberTech +" a prumer: "+((AbsStudent)getStudent(id)).getAverage()+" to je "+sumTech);
+          prumTech = sumTech/numberTech;
+        } 
+        if((getStudent(id) instanceof HumanitarianStudy) || (getStudent(id) instanceof CombinedStudy)) {
+          numberHum++;
+          sumHum = sumHum + ((AbsStudent)getStudent(id)).getAverage();
+          System.out.println("Hum pridano "+numberHum +" a prumer: "+((AbsStudent)getStudent(id)).getAverage()+" to je "+sumHum);
+          prumHum = sumHum/numberHum;
+        }
+      }
+        if(numberTech!=0) {
+          System.out.println("prumTech: "+prumTech);
+          
+      } else {
+        System.out.println("There are no students in Technical Studies");
+      }
+      if(numberHum!=0) {
+        System.out.println("prumHum: "+prumHum);
+        
+    } else {
+      System.out.println("There are no students in Humanitarian Studies");
+    }
+      
+      System.out.println("General average grades from Technical Studies is: " + (float)prumTech);
+      System.out.printf("General average grades from Technical Studies is: %4.3f\n", (float)prumTech);
+
+      System.out.println("General average grades from Humanitarian Studies is: " + (float)prumHum);
+      System.out.printf("General average grades from Humanitarian Studies is: %4.3f\n", (float)prumHum);
     }
 
   }

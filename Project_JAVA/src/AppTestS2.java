@@ -54,7 +54,8 @@ public class AppTestS2 {
         db.addStudent(1, "as", "aaaasd", LocalDate.parse("2000-07-06"));
         db.listOfStudents();
         db.sNameSort();
-        db.generalAverage();
+        //db.generalAverage();
+        db.generalAvgTech();
         
     }
 }
