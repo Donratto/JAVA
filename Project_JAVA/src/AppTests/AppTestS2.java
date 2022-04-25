@@ -54,13 +54,17 @@ public class AppTestS2 {
         //db.deleteStudent(0);
         //db.deleteStudent(4);
         //db.deleteStudent(2);
-        db.listOfStudents();
+        //db.listOfStudents();
         db.addStudent(1, "as", "zasd", LocalDate.parse("2000-07-06"));
         db.addStudent(1, "as", "Aaaasd", LocalDate.parse("2000-07-06"));
         db.listOfStudents();
         db.sNameSort();
         //db.generalAverage();
         db.generalAvg();
+        db.studentsInStudies();
+        System.out.println(db.ActuallNumberOfStudents());
+
+        db.saveDatabase("fileNameTest");
         
     }
 }

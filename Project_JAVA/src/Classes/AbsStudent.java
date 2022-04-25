@@ -133,30 +133,40 @@ public abstract class AbsStudent {
         System.err.println("Enter only one number from: {1, 2, 3, 4, 5}");
     }
 
-    public static int IntInput(Scanner sc, int i) 
+    public static int IntInput(Scanner sc, int maxNumber) 
 	{
 		int number = 0;
 		try
 		{
-            System.out.printf("enter int: ");
-            number = sc.nextInt();
-            if((number < 1 || number > 5)) {
-                throw new gradeExceptions();
-            } 
+            if (maxNumber==5){ 
+                System.out.printf("enter int: ");
+                number = sc.nextInt();
+                if((number < 1 || number > 5)) {
+                    throw new gradeExceptions();
+                }
+            } else if (maxNumber==3) {
+                System.out.printf("enter int: ");
+                number = sc.nextInt();
+                if((number < 1 || number > 3)) {
+                    System.out.printf("Enter only one number from: {1, 2, 3}: \n");
+                    sc.nextLine();
+                    IntInput(sc,maxNumber);
+                }
+            }
 		}
 		catch(InputMismatchException e)
 		{
 			System.out.println("Exception has occured: "+e.toString());
 			System.out.printf("Enter only integers: \n");
 			sc.nextLine();
-			number = IntInput(sc,1);
+			number = IntInput(sc,maxNumber);
 		}
         catch(gradeExceptions e) 
         {
             System.out.println("chytám: " +e.toString());
             System.out.printf("Enter only one number from: {1, 2, 3, 4, 5}: \n");
             sc.nextLine();
-            number = IntInput(sc,1);
+            number = IntInput(sc,maxNumber);
         }
 		return number;
 	}

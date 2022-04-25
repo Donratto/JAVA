@@ -1,4 +1,9 @@
 package javaDatabase;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,15 +38,43 @@ public class Database {
         type = " {type="+TheDatabase.get(id).getClass().getSimpleName()+"}";
         }
         System.out.printf("Student: {ID=%d} {firstname=%s} {secondname=%s} {year of birth=%s} {average grade=%4.3f}%s\n",id,fName,sName,birthYear,avg,type);
-        
+    }
+
+    private String printStudent1(int id) {
+      String fName = ((AbsStudent)getStudent(id)).getFirstName();
+      String sName = ((AbsStudent)getStudent(id)).getSecondName();
+      String birthYear = ""+((AbsStudent)TheDatabase.get(id)).getBirthDate().getYear();
+      double avg = ((AbsStudent) TheDatabase.get(id)).getAverage();
+      String type=" {type="+TheDatabase.get(id).getClass().getSimpleName()+"}";
+      return String.format("Student: {ID=%d} {firstname=%s} {secondname=%s} {year of birth=%s} {average grade=%4.3f}%s\n",id,fName,sName,birthYear,avg,type);
+    }
+
+    private String printStudent(int id) {
+      String fName = ((AbsStudent)getStudent(id)).getFirstName();
+      String sName = ((AbsStudent)getStudent(id)).getSecondName();
+      int birthYear = ((AbsStudent)TheDatabase.get(id)).getBirthDate().getYear();
+      double avg = ((AbsStudent) TheDatabase.get(id)).getAverage();
+      String type=TheDatabase.get(id).getClass().getSimpleName();
+      return String.format("%d;%s;%s;%04d;%4.3f;%s",id,fName,sName,birthYear,avg,type);
+    }
+
+    public int ActuallNumberOfStudents() {
+      int AcNmbStud = 0;
+      for (int id = 0; id < numberOfStudents; id++) {
+        if (((AbsStudent)getStudent(id))!=null) {
+          AcNmbStud++;
+        }
+      }
+      return AcNmbStud;
     }
 
 
     //a)
 
-    public void addStudent(int i, String firstName, String secondName, LocalDate birthDate) {
+    public void addStudent(int typeOfStudy, String firstName, String secondName, LocalDate birthDate) {
       int id = numberOfStudents++;
-      switch (i) {
+      System.out.println(typeOfStudy);
+      switch (typeOfStudy) {
         case (1): TheDatabase.put(id, new TechnicalStudy(id, firstName, secondName, birthDate)); break;
         case (2): TheDatabase.put(id, new HumanitarianStudy(id, firstName, secondName, birthDate)); break;
         case (3): TheDatabase.put(id, new CombinedStudy(id, firstName, secondName, birthDate)); break;
@@ -88,7 +121,7 @@ public class Database {
     
     
 
-    public void listOfStudents3() {
+    public void listOfStudents1() {
       
       for (int id = 0; id < numberOfStudents; id++) {
         if (((AbsStudent)getStudent(id))!=null) {
@@ -301,4 +334,109 @@ public class Database {
         System.out.println("There are no students in Humanitarian Studies");
       }
     }
+
+    //h)
+
+    public void studentsInStudies() {
+      int numberTech = 0, numberHum = 0, numberCom = 0;
+      for(int id = 0; id < numberOfStudents; id++) {
+        if(getStudent(id)==null) continue;
+        if(getStudent(id) instanceof TechnicalStudy) {
+          numberTech++;
+        } else if (getStudent(id) instanceof HumanitarianStudy) {
+          numberHum++;
+        } else if(getStudent(id) instanceof CombinedStudy) {
+          numberCom++;
+        }
+      }
+      System.out.printf("Number of students in studies\nTechnical: %d\nHumanitarian: %d\nCombined: %d\n",numberTech,numberHum,numberCom);
+    }
+
+
+    //i)  
+    
+    public void loadDatabase(String fileName) {
+      System.out.println("step 0");
+      FileReader fReader = null;
+      BufferedReader bfReader = null;
+      try {
+        System.out.println("step 1");
+        fReader = new FileReader(fileName+".txt");
+        System.out.println("step 2");
+        bfReader = new BufferedReader(fReader);
+        System.out.println("step 3");
+        String oneLine = bfReader.readLine();
+        String seppartor1 = " ",seppartor2 = ";";
+        String firstName, secondName, type;
+        int id;
+        LocalDate birthDate;
+        String []entry = oneLine.split(seppartor1);
+        System.out.println("geegee");
+        if (entry.length == 2) {
+          System.out.println("step 4");
+          System.out.println("Amount of students in database "+fileName+" is "+entry[1]);
+        }
+        for(int i = 0; i < Integer.parseInt(entry[1]); i++) {
+          oneLine = bfReader.readLine();
+          System.out.println("step 5");
+          entry = oneLine.split(seppartor2);
+          System.out.println("step 6");
+          if (entry.length == 6) {
+            System.out.println("step 7");
+            id = Integer.parseInt(entry[0]);
+            System.out.println(id);
+            firstName = entry[1];
+            System.out.println(firstName);
+            secondName = entry[2];
+            System.out.println(secondName);
+            //birthDate = LocalDate.parse(entry[3]);
+            birthDate = LocalDate.parse("2000-07-06");
+            System.out.println(birthDate);
+            type = entry[5];
+            System.out.println(type);
+            switch(type) {
+              case ("TechnicalStudy"): addStudent(1, firstName, secondName, birthDate);
+              stalkStudent(0);
+              break;
+              case ("HumanitarianStudy"): addStudent(2, firstName, secondName, birthDate); break;
+              case ("CombinedStudy"): addStudent(3, firstName, secondName, birthDate); break;
+              default : System.out.println("invalid type of study"); break;
+            }
+            
+          }
+          
+        }
+
+      } catch (Exception e) {
+        System.out.println("weeee, i am falling");
+        System.out.println("and why you ask?\nthis is why: " + e.toString());
+      
+      }
+    }
+
+
+    //j)
+
+    public void saveDatabase(String fileName) {
+      try {
+        FileWriter fWriter = new FileWriter(fileName + ".txt");
+        BufferedWriter bWriter = new BufferedWriter(fWriter);
+        //bWriter.write(new String("Amount of students: " + ActuallNumberOfStudents()));
+        bWriter.write(new String("AmountOfStudents " + ActuallNumberOfStudents()));
+        bWriter.newLine();
+        for (int id = 0; id < numberOfStudents; id++) {
+          if (((AbsStudent)getStudent(id))!=null) {
+            bWriter.write(printStudent(id));
+            bWriter.newLine();
+          }
+        }
+        bWriter.close();
+        fWriter.close();
+      } catch (IOException e) {
+        System.out.println("Cannot create file named :"+fileName);
+      } catch (Exception e) {
+        System.err.println("hello?? "+e.toString());
+      }
+    }
+
   }
