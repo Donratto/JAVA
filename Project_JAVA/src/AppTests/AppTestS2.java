@@ -48,15 +48,15 @@ public class AppTestS2 {
             
         db.addStudent(2, "haf", "hig", LocalDate.parse("2000-07-06"));
         db.addStudent(3, "dif", "fid", LocalDate.parse("2000-07-06"));
-        db.addStudent(1, "as", "dasds", LocalDate.parse("2000-07-06"));
+        db.addStudent(1, "asasas", "AaAbb", LocalDate.parse("2000-07-06"));
         db.addStudent(3, "asas", "sfa", LocalDate.parse("2000-07-06"));
         db.listOfStudents();
         //db.deleteStudent(0);
         //db.deleteStudent(4);
         //db.deleteStudent(2);
-        //db.listOfStudents();
+        db.listOfStudents();
         db.addStudent(1, "as", "zasd", LocalDate.parse("2000-07-06"));
-        db.addStudent(1, "as", "aaaasd", LocalDate.parse("2000-07-06"));
+        db.addStudent(1, "as", "Aaaasd", LocalDate.parse("2000-07-06"));
         db.listOfStudents();
         db.sNameSort();
         //db.generalAverage();

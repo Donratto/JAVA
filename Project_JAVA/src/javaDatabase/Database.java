@@ -206,8 +206,6 @@ public class Database {
       }
     }
     
-
-
     public void generalAvgTech() {
       int numberTech = 0, numberHum = 0;
       double sumTech = 0.0, sumHum =0.0;
@@ -218,34 +216,28 @@ public class Database {
         if((getStudent(id) instanceof TechnicalStudy) || (getStudent(id) instanceof CombinedStudy)) {
           numberTech++;
           sumTech = sumTech + ((AbsStudent)getStudent(id)).getAverage();
-          System.out.println("Tech pridano "+numberTech +" a prumer: "+((AbsStudent)getStudent(id)).getAverage()+" to je "+sumTech);
+          //System.out.println("Tech pridano "+numberTech +" a prumer: "+((AbsStudent)getStudent(id)).getAverage()+" to je "+sumTech);
           prumTech = sumTech/numberTech;
         } 
         if((getStudent(id) instanceof HumanitarianStudy) || (getStudent(id) instanceof CombinedStudy)) {
           numberHum++;
           sumHum = sumHum + ((AbsStudent)getStudent(id)).getAverage();
-          System.out.println("Hum pridano "+numberHum +" a prumer: "+((AbsStudent)getStudent(id)).getAverage()+" to je "+sumHum);
+          //System.out.println("Hum pridano "+numberHum +" a prumer: "+((AbsStudent)getStudent(id)).getAverage()+" to je "+sumHum);
           prumHum = sumHum/numberHum;
         }
       }
         if(numberTech!=0) {
-          System.out.println("prumTech: "+prumTech);
+          //System.out.println("prumTech: "+prumTech);
+          System.out.printf("General average grades from Technical Studies is: %4.3f\n", prumTech);
           
       } else {
         System.out.println("There are no students in Technical Studies");
       }
       if(numberHum!=0) {
-        System.out.println("prumHum: "+prumHum);
-        
-    } else {
-      System.out.println("There are no students in Humanitarian Studies");
+        //System.out.println("prumHum: "+prumHum);
+        System.out.printf("General average grades from Humanitarian Studies is: %.3f\n", prumHum);
+      } else {
+        System.out.println("There are no students in Humanitarian Studies");
+      }
     }
-      
-      System.out.println("General average grades from Technical Studies is: " + (float)prumTech);
-      System.out.printf("General average grades from Technical Studies is: %4.3f\n", (float)prumTech);
-
-      System.out.println("General average grades from Humanitarian Studies is: " + (float)prumHum);
-      System.out.printf("General average grades from Humanitarian Studies is: %4.f\n", (float)prumHum);
-    }
-
   }
