@@ -1,13 +1,13 @@
 package AppTests;
 import java.time.LocalDate;
-import java.util.InputMismatchException;
+
 import java.util.Random;
 import java.util.Scanner;
 
 import Classes.AbsStudent;
 import javaDatabase.Database;
 
-import java.util.HashMap;
+
 
 
 
@@ -23,15 +23,15 @@ public class AppTestS2 {
         
         
         for(int idx = 0; idx < 3; idx++ ) {
-            //System.out.println(db.skillStudent03(idx));
             //db.skillStudent02(idx);
             //db.skillStudent03(idx);
-
+            System.out.println(db.skillStudent(idx));
             
                     for(int i = 1; i < 3;i++) {
                         var r = new Random();
                         int s = r.nextInt(5)+1;
                         ((AbsStudent)db.getStudent(idx)).addGrade(s);
+                        
                 
             }
                 db.stalkStudent(idx);
@@ -60,7 +60,7 @@ public class AppTestS2 {
         db.listOfStudents();
         db.sNameSort();
         //db.generalAverage();
-        db.generalAvgTech();
+        db.generalAvg();
         
     }
 }

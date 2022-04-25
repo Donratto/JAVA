@@ -23,6 +23,20 @@ public class Database {
       return TheDatabase.get(id);
     }
 
+    private void printStudent(int id, Boolean study) {
+        String fName = ((AbsStudent)getStudent(id)).getFirstName();
+        String sName = ((AbsStudent)getStudent(id)).getSecondName();
+        String birthYear = ""+((AbsStudent)TheDatabase.get(id)).getBirthDate().getYear();
+        double avg = ((AbsStudent) TheDatabase.get(id)).getAverage();
+        String type="";
+        if (study) {
+        type = " {type="+TheDatabase.get(id).getClass().getSimpleName()+"}";
+        }
+        System.out.printf("Student: {ID=%d} {firstname=%s} {secondname=%s} {year of birth=%s} {average grade=%4.3f}%s\n",id,fName,sName,birthYear,avg,type);
+        
+    }
+
+
     //a)
 
     public void addStudent(int i, String firstName, String secondName, LocalDate birthDate) {
@@ -55,18 +69,26 @@ public class Database {
 
     //d)?
     
-    public void stalkStudent(int id) {
+    public void stalkStudent1(int id) {
       if(((AbsStudent)getStudent(id))!=null) {
         String fName = ((AbsStudent)getStudent(id)).getFirstName();
         String sName = ((AbsStudent)getStudent(id)).getSecondName();
         String birthYear = ""+((AbsStudent)TheDatabase.get(id)).getBirthDate().getYear();
         double avg = ((AbsStudent) TheDatabase.get(id)).getAverage();
-        String type = TheDatabase.get(id).getClass().toString();
+        String type = TheDatabase.get(id).getClass().getSimpleName();
         System.out.printf("Student: {ID=%d} {firstname=%s} {secondname=%s} {year of birth=%s} {average grade=%4.3f} {type=%s}",id,fName,sName,birthYear,avg,type);
       }
     }
+
+    public void stalkStudent(int id) {
+      if(((AbsStudent)getStudent(id))!=null) {
+        printStudent(id,true);
+      }
+    }
     
-    public void listOfStudents() {
+    
+
+    public void listOfStudents3() {
       
       for (int id = 0; id < numberOfStudents; id++) {
         if (((AbsStudent)getStudent(id))!=null) {
@@ -78,7 +100,14 @@ public class Database {
           System.out.printf("Student: {ID=%d} {firstname=%s} {secondname=%s} {year of birth=%s} {average grade=%4.3f} {type=%s}\n",id,fName,sName,birthYear,avg,type);
         } 
       }
-        
+    }
+    public void listOfStudents() {
+      
+      for (int id = 0; id < numberOfStudents; id++) {
+        if (((AbsStudent)getStudent(id))!=null) {
+          printStudent(id, false);
+        } 
+      }
     }
 
 
@@ -113,7 +142,7 @@ public class Database {
     
     //e)
     
-    public String skillStudent03(int id) {
+    public String skillStudent(int id) {
       var type = getStudent(id);
       String internal01 = "";
       String internal02 = "";
@@ -135,6 +164,37 @@ public class Database {
 
     //f)
 
+    /*
+    public void sNameSort1() {
+      ArrayList<TechnicalStudy> technicalStudies = new ArrayList<>();
+      ArrayList<HumanitarianStudy> humanitarianStudies = new ArrayList<>();
+      ArrayList<CombinedStudy> combinedStudies = new ArrayList<>();
+      for(int id = 0; id < numberOfStudents; id++) {
+        if(getStudent(id) instanceof TechnicalStudy) {
+          technicalStudies.add((TechnicalStudy) getStudent(id));
+        } else if (getStudent(id) instanceof HumanitarianStudy) {
+          humanitarianStudies.add((HumanitarianStudy) getStudent(id));
+        } else if (getStudent(id) instanceof CombinedStudy) {
+          combinedStudies.add((CombinedStudy) getStudent(id));
+        }
+      }
+      technicalStudies.sort((o1, o2) -> o1.getSecondName().compareTo(o2.getSecondName()));
+      System.err.println("Students of Technical Studies:");
+        for (TechnicalStudy student: technicalStudies){
+          System.out.printf("Student: {ID= %d} {firstname= %s} {secondname=%s} {year of birth=%s} {average grade=%4.3f}\n",student.getId(),student.getFirstName(),student.getSecondName(),student.getBirthDate(),student.getAverage());
+      }
+      humanitarianStudies.sort((o1, o2) -> o1.getSecondName().compareTo(o2.getSecondName()));
+      System.err.println("Students of Humanitarian Studies:");
+        for (HumanitarianStudy student: humanitarianStudies){
+          System.out.printf("Student: {ID=%d} {firstname=%s} {secondname=%s} {year of birth=%s} {average grade=%4.3f}\n",student.getId(),student.getFirstName(),student.getSecondName(),student.getBirthDate(),student.getAverage());
+      }
+      combinedStudies.sort((o1, o2) -> o1.getSecondName().compareTo(o2.getSecondName()));
+      System.err.println("Students of Combined Studies:");
+        for (CombinedStudy student: combinedStudies){
+          System.out.printf("Student: {ID=%d} {firstname=%s} {secondname=%s} {year of birth=%s} {average grade=%4.3f}\n",student.getId(),student.getFirstName(),student.getSecondName(),student.getBirthDate(),student.getAverage());
+      }
+    }
+  */
     public void sNameSort() {
       ArrayList<TechnicalStudy> technicalStudies = new ArrayList<>();
       ArrayList<HumanitarianStudy> humanitarianStudies = new ArrayList<>();
@@ -151,23 +211,24 @@ public class Database {
       technicalStudies.sort((o1, o2) -> o1.getSecondName().compareTo(o2.getSecondName()));
       System.err.println("Students of Technical Studies:");
         for (TechnicalStudy student: technicalStudies){
-          System.out.printf("Student: {ID=%d} {firstname=%s} {secondname=%s} {year of birth=%s} {average grade=%4.3f}\n",student.getId(),student.getFirstName(),student.getSecondName(),student.getBirthDate(),student.getAverage());
+          printStudent(student.getId(), false);
       }
       humanitarianStudies.sort((o1, o2) -> o1.getSecondName().compareTo(o2.getSecondName()));
       System.err.println("Students of Humanitarian Studies:");
         for (HumanitarianStudy student: humanitarianStudies){
-          System.out.printf("Student: {ID=%d} {firstname=%s} {secondname=%s} {year of birth=%s} {average grade=%4.3f}\n",student.getId(),student.getFirstName(),student.getSecondName(),student.getBirthDate(),student.getAverage());
+          printStudent(student.getId(), false);
       }
       combinedStudies.sort((o1, o2) -> o1.getSecondName().compareTo(o2.getSecondName()));
       System.err.println("Students of Combined Studies:");
         for (CombinedStudy student: combinedStudies){
-          System.out.printf("Student: {ID=%d} {firstname=%s} {secondname=%s} {year of birth=%s} {average grade=%4.3f}\n",student.getId(),student.getFirstName(),student.getSecondName(),student.getBirthDate(),student.getAverage());
+          printStudent(student.getId(), false);
       }
     }
-  
+
+
     
     //g)
-    
+    /*
     public void generalAverage() {
       double sumTech=0, sumHum= 0;
       int numberOfTech=0, numberOfHum=0;
@@ -205,8 +266,8 @@ public class Database {
         System.out.println(sumHum);
       }
     }
-    
-    public void generalAvgTech() {
+    */
+    public void generalAvg() {
       int numberTech = 0, numberHum = 0;
       double sumTech = 0.0, sumHum =0.0;
       double prumTech = 0, prumHum = 0;
