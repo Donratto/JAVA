@@ -1,6 +1,11 @@
+package Classes;
 import java.time.LocalDate;
 
-public class CombinedStudy extends AbsStudent implements IHum, ITech {
+import Enums.ZodiacSigns;
+import Interfaces.IHum;
+import Interfaces.ITech;
+
+public class CombinedStudy extends AbsStudent implements ITech, IHum {
     //private ZodiacSigns zodiacSigns;
 
     public CombinedStudy(int id, String firstName, String secondName, LocalDate birthDate) {

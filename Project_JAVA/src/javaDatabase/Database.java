@@ -1,6 +1,13 @@
+package javaDatabase;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import Classes.AbsStudent;
+import Classes.CombinedStudy;
+import Classes.HumanitarianStudy;
+import Classes.TechnicalStudy;
+
 
 public class Database {
     
@@ -238,7 +245,7 @@ public class Database {
       System.out.printf("General average grades from Technical Studies is: %4.3f\n", (float)prumTech);
 
       System.out.println("General average grades from Humanitarian Studies is: " + (float)prumHum);
-      System.out.printf("General average grades from Humanitarian Studies is: %4.3f\n", (float)prumHum);
+      System.out.printf("General average grades from Humanitarian Studies is: %4.f\n", (float)prumHum);
     }
 
   }

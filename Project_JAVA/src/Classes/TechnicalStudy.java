@@ -1,5 +1,8 @@
+package Classes;
 
 import java.time.LocalDate;
+
+import Interfaces.ITech;
 
 public class TechnicalStudy extends AbsStudent implements ITech{
     

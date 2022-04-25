@@ -1,4 +1,8 @@
+package Classes;
+
 import java.time.LocalDate;
+import Enums.ZodiacSigns;
+import Interfaces.IHum;
 
 public class HumanitarianStudy extends AbsStudent implements IHum {
     //private ZodiacSigns zodiacSigns;
@@ -9,7 +13,8 @@ public class HumanitarianStudy extends AbsStudent implements IHum {
 
     @Override
     public  ZodiacSigns isZodiacSign(LocalDate birthDate) {
-        if ((birthDate.getMonthValue() == 3 && birthDate.getDayOfMonth() >= 21) || (birthDate.getMonthValue() == 4 && birthDate.getDayOfMonth() <= 19)) {
+        if ((birthDate.getMonthValue() == 3 && birthDate.getDayOfMonth() >= 21) ||
+                        (birthDate.getMonthValue() == 4 && birthDate.getDayOfMonth() <= 19)) {
             //System.out.println("beran");
             return ZodiacSigns.ARIES;
         }else if ((birthDate.getMonthValue() == 4 && birthDate.getDayOfMonth() >= 20) || (birthDate.getMonthValue() == 5 && birthDate.getDayOfMonth() <= 20)) {

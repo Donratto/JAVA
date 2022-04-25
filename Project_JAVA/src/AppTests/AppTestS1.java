@@ -1,6 +1,9 @@
+package AppTests;
 import java.time.LocalDate;
-import java.util.InputMismatchException;
 import java.util.Scanner;
+
+import Classes.*;
+import Classes.TechnicalStudy;
 
 public class AppTestS1 {
     public static void main(String[] args) throws Exception {

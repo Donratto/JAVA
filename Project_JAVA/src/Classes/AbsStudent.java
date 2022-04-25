@@ -1,7 +1,10 @@
+package Classes;
 import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.LinkedList;
 import java.util.Scanner;
+
+import Exceptions.gradeExceptions;
 
 public abstract class AbsStudent {
     
@@ -63,7 +66,7 @@ public abstract class AbsStudent {
             return null;
         }
     }
-    public void setGrade(Integer idx, Integer number) throws grade_exception{
+    public void setGrade(Integer idx, Integer number) throws gradeExceptions{
         if(number >= 1 && number <= 5) {
             this.grades.set(idx, number);
         }
@@ -138,7 +141,7 @@ public abstract class AbsStudent {
             System.out.printf("enter int: ");
             number = sc.nextInt();
             if((number < 1 || number > 5)) {
-                throw new grade_exception();
+                throw new gradeExceptions();
             } 
 		}
 		catch(InputMismatchException e)
@@ -148,7 +151,7 @@ public abstract class AbsStudent {
 			sc.nextLine();
 			number = IntInput(sc,1);
 		}
-        catch(grade_exception e) 
+        catch(gradeExceptions e) 
         {
             System.out.println("chytám: " +e.toString());
             System.out.printf("Enter only one number from: {1, 2, 3, 4, 5}: \n");
