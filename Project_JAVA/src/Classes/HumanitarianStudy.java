@@ -9,9 +9,9 @@ public class HumanitarianStudy extends AbsStudent implements IHum {
     public HumanitarianStudy(int id, String firstName, String secondName, LocalDate birthDate) {
         super(id, firstName, secondName, birthDate);
     }
-
-    @Override
-    public  ZodiacSigns isZodiacSign(LocalDate birthDate) {
+    
+    
+    public  ZodiacSigns isZodiacSignSmazat(LocalDate birthDate) {
         int month = birthDate.getMonthValue();
         int day = birthDate.getDayOfMonth();
         if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) {
@@ -52,4 +52,40 @@ public class HumanitarianStudy extends AbsStudent implements IHum {
             return ZodiacSigns.PISCES;
         } else return null;
     }
+    
+
+    @Override
+    public ZodiacSigns isZodiacSign(LocalDate birthDate) {
+        boolean leap = birthDate.isLeapYear();
+
+        
+        int dayOfYear = birthDate.getDayOfYear();
+        if((dayOfYear < 20) || ( !leap && dayOfYear > 355) || ( leap && dayOfYear > 356)) {
+            return ZodiacSigns.CAPRICON;
+        } else if ((dayOfYear < 50)){
+            return ZodiacSigns.AQUARIUS;
+        }else if (( !leap && dayOfYear < 80) || ( leap && dayOfYear < 81)){
+            return ZodiacSigns.PISCES;
+        }else if (( !leap && dayOfYear < 110) || ( leap && dayOfYear < 111)){
+            return ZodiacSigns.ARIES;
+        }else if (( !leap && dayOfYear < 141) || ( leap && dayOfYear < 142)){
+            return ZodiacSigns.TAURUS;
+        }else if (( !leap && dayOfYear < 172) || ( leap && dayOfYear < 173)){
+            return ZodiacSigns.GEMINI;
+        }else if (( !leap && dayOfYear < 204) || ( leap && dayOfYear < 205)){
+            return ZodiacSigns.CANCER;
+        }else if (( !leap && dayOfYear < 235) || ( leap && dayOfYear < 236)){
+            return ZodiacSigns.LEO;
+        }else if (( !leap && dayOfYear < 266) || ( leap && dayOfYear < 267)){
+            return ZodiacSigns.VIRGO;
+        }else if (( !leap && dayOfYear < 296) || ( leap && dayOfYear < 297)){
+            return ZodiacSigns.LIBRA;
+        }else if (( !leap && dayOfYear < 326) || ( leap && dayOfYear < 327)){
+            return ZodiacSigns.SCORPIO;
+        }else {
+            return ZodiacSigns.SAGITTARIUS;
+        }
+    }
+
+    
 }

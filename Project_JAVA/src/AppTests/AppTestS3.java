@@ -24,10 +24,10 @@ public class AppTestS3 {
         db.addStudent(3, "Klex", "Hklex", LocalDate.parse("9999-07-06"));
         
         
-        for(int idx = 0; idx < Database.numberOfStudents; idx++ ) {
+        for(int idx = 0; idx < Database.nextStudentId; idx++ ) {
             //db.skillStudent02(idx);
             //db.skillStudent03(idx);
-            //System.out.println(db.skillStudent(idx));
+            System.out.println(db.skillStudent(idx));
             
                     for(int i = 1; i < 4;i++) {
                         int d = (new Random()).nextInt(5)+1;

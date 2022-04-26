@@ -17,7 +17,7 @@ import Classes.TechnicalStudy;
 public class Database {
     
     private HashMap<Integer, Object> TheDatabase;
-    public static int numberOfStudents = 0;
+    public static int nextStudentId = 0;
 
     public Database() {
         TheDatabase = new HashMap<Integer, Object>();
@@ -60,7 +60,7 @@ public class Database {
 
     public int ActuallNumberOfStudents() {
       int AcNmbStud = 0;
-      for (int id = 0; id < numberOfStudents; id++) {
+      for (int id = 0; id < nextStudentId; id++) {
         if (((AbsStudent)getStudent(id))!=null) {
           AcNmbStud++;
         }
@@ -72,7 +72,7 @@ public class Database {
     //a)
 
     public void addStudent(int typeOfStudy, String firstName, String secondName, LocalDate birthDate) {
-      int id = numberOfStudents++;
+      int id = nextStudentId++;
       switch (typeOfStudy) {
         case (1): TheDatabase.put(id, new TechnicalStudy(id, firstName, secondName, birthDate)); break;
         case (2): TheDatabase.put(id, new HumanitarianStudy(id, firstName, secondName, birthDate)); break;
@@ -122,7 +122,7 @@ public class Database {
 
     public void listOfStudents1() {
       
-      for (int id = 0; id < numberOfStudents; id++) {
+      for (int id = 0; id < nextStudentId; id++) {
         if (((AbsStudent)getStudent(id))!=null) {
           String fName = ((AbsStudent)getStudent(id)).getFirstName();
           String sName = ((AbsStudent)getStudent(id)).getSecondName();
@@ -135,7 +135,7 @@ public class Database {
     }
     public void listOfStudents() {
       
-      for (int id = 0; id < numberOfStudents; id++) {
+      for (int id = 0; id < nextStudentId; id++) {
         if (((AbsStudent)getStudent(id))!=null) {
           printStudent(id, false);
         } 
@@ -194,6 +194,26 @@ public class Database {
       return "Birth year is leapyear: "+internal01;
     }
 
+    public String skillStudentSmazat(int id) {
+      var type = getStudent(id);
+      String internal01 = "";
+      String internal02 = "";
+
+      if(type instanceof CombinedStudy) {
+        internal01 = ""+ ((CombinedStudy) getStudent(id)).isLeapYear_Birth(((AbsStudent)getStudent(id)).getBirthDate());
+        internal02 = ""+ ((CombinedStudy) getStudent(id)).isZodiacSign(((AbsStudent) getStudent(id)).getBirthDate());
+        return "Birth year is a leapyear: "+internal01+"\nZodiac sign is: "+internal02;
+      } else if(type instanceof HumanitarianStudy) {
+        internal02 = ""+ ((HumanitarianStudy) getStudent(id)).isZodiacSignSmazat(((AbsStudent) getStudent(id)).getBirthDate());
+        return "Zodiac sign is: "+internal02;
+      }else if(type instanceof TechnicalStudy){
+        internal01 = ""+ ((TechnicalStudy) getStudent(id)).isLeapYear_Birth(((AbsStudent) getStudent(id)).getBirthDate());
+        return "Birth year is a leapyear: "+internal01;
+      }
+
+      return "Birth year is leapyear: "+internal01;
+    }
+
     //f)
 
     /*
@@ -201,7 +221,7 @@ public class Database {
       ArrayList<TechnicalStudy> technicalStudies = new ArrayList<>();
       ArrayList<HumanitarianStudy> humanitarianStudies = new ArrayList<>();
       ArrayList<CombinedStudy> combinedStudies = new ArrayList<>();
-      for(int id = 0; id < numberOfStudents; id++) {
+      for(int id = 0; id < nextStudentId; id++) {
         if(getStudent(id) instanceof TechnicalStudy) {
           technicalStudies.add((TechnicalStudy) getStudent(id));
         } else if (getStudent(id) instanceof HumanitarianStudy) {
@@ -231,7 +251,7 @@ public class Database {
       ArrayList<TechnicalStudy> technicalStudies = new ArrayList<>();
       ArrayList<HumanitarianStudy> humanitarianStudies = new ArrayList<>();
       ArrayList<CombinedStudy> combinedStudies = new ArrayList<>();
-      for(int id = 0; id < numberOfStudents; id++) {
+      for(int id = 0; id < nextStudentId; id++) {
         if(getStudent(id) instanceof TechnicalStudy) {
           technicalStudies.add((TechnicalStudy) getStudent(id));
         } else if (getStudent(id) instanceof HumanitarianStudy) {
@@ -264,7 +284,7 @@ public class Database {
     public void generalAverage() {
       double sumTech=0, sumHum= 0;
       int numberOfTech=0, numberOfHum=0;
-      for(int id = 0; id < numberOfStudents; id++) {
+      for(int id = 0; id < nextStudentId; id++) {
         if(getStudent(id)==null) continue;
         if (getStudent(id) instanceof TechnicalStudy || getStudent(id) instanceof CombinedStudy) {
           if(!(((AbsStudent)getStudent(id)).getAverage()==0)) { 
@@ -302,7 +322,7 @@ public class Database {
     public void generalAvg() {
       int numberTech = 0, numberHum = 0;
       double sumTech = 0.0, sumHum =0.0;
-      for(int id = 0; id < numberOfStudents; id++) {
+      for(int id = 0; id < nextStudentId; id++) {
         if(getStudent(id)==null) continue;
         if(((AbsStudent)getStudent(id)).getAverage()==0) continue;
         if((getStudent(id) instanceof TechnicalStudy) || (getStudent(id) instanceof CombinedStudy)) {
@@ -335,7 +355,7 @@ public class Database {
 
     public void studentsInStudies() {
       int numberTech = 0, numberHum = 0, numberCom = 0;
-      for(int id = 0; id < numberOfStudents; id++) {
+      for(int id = 0; id < nextStudentId; id++) {
         if(getStudent(id)==null) continue;
         if(getStudent(id) instanceof TechnicalStudy) {
           numberTech++;
@@ -385,7 +405,7 @@ public class Database {
             secondName = entry[2];
             birthDate = LocalDate.parse(entry[3]);
             type = entry[5];
-          if (id != numberOfStudents) {System.out.println("adding to nmbStudens: "+numberOfStudents+ " ->"+" id: "+id);numberOfStudents=id;}
+          if (id != nextStudentId) {System.out.println("adding to nmbStudens: "+nextStudentId+ " ->"+" id: "+id);nextStudentId=id;}
           if (entry.length == 7) {
             
             switch(type) {
@@ -426,7 +446,7 @@ public class Database {
         //bWriter.write(new String("Amount of students: " + ActuallNumberOfStudents()));
         bWriter.write(new String("AmountOfStudents " + ActuallNumberOfStudents()));
         bWriter.newLine();
-        for (int id = 0; id < numberOfStudents; id++) {
+        for (int id = 0; id < nextStudentId; id++) {
           if (((AbsStudent)getStudent(id))!=null) {
             bWriter.write(printStudent(id));
             if(((AbsStudent)getStudent(id)).getGrade(0)!=null) {
