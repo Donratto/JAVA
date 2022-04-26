@@ -63,8 +63,9 @@ public class AppTestS2 {
         db.generalAvg();
         db.studentsInStudies();
         System.out.println(db.ActuallNumberOfStudents());
-
-        db.saveDatabase("fileNameTest");
+        System.out.println(((AbsStudent)db.getStudent(6)).getGrade(0));
+        
+        //db.saveDatabase("fileNameTest");
         
     }
 }

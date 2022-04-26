@@ -9,7 +9,8 @@ import Exceptions.gradeExceptions;
 public abstract class AbsStudent {
     
     private int id;
-    private String firstName, secondName;
+    private String firstName;
+    private String secondName;
     private LocalDate birthDate;
     private LinkedList<Integer> grades;
     
@@ -95,6 +96,15 @@ public abstract class AbsStudent {
             System.out.print(grades.get(i)+" ");
         }
         System.out.println();
+    }
+    public String getGrades() {
+        String stringOfGrades = "";
+        String space = " ";
+        for (int i = 0; i < grades.size(); i++) {
+            stringOfGrades = stringOfGrades + grades.get(i);
+            if(i!=grades.size()-1) stringOfGrades = stringOfGrades + space;
+        }
+        return stringOfGrades;
     }
     
     /*

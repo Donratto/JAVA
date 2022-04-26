@@ -52,10 +52,10 @@ public class Database {
     private String printStudent(int id) {
       String fName = ((AbsStudent)getStudent(id)).getFirstName();
       String sName = ((AbsStudent)getStudent(id)).getSecondName();
-      int birthYear = ((AbsStudent)TheDatabase.get(id)).getBirthDate().getYear();
+      String birthYear = ((AbsStudent)TheDatabase.get(id)).getBirthDate().toString();
       double avg = ((AbsStudent) TheDatabase.get(id)).getAverage();
-      String type=TheDatabase.get(id).getClass().getSimpleName();
-      return String.format("%d;%s;%s;%04d;%4.3f;%s",id,fName,sName,birthYear,avg,type);
+      String type = TheDatabase.get(id).getClass().getSimpleName();
+      return String.format("%d;%s;%s;%s;%4.3f;%s",id,fName,sName,birthYear,avg,type);
     }
 
     public int ActuallNumberOfStudents() {
@@ -73,7 +73,6 @@ public class Database {
 
     public void addStudent(int typeOfStudy, String firstName, String secondName, LocalDate birthDate) {
       int id = numberOfStudents++;
-      System.out.println(typeOfStudy);
       switch (typeOfStudy) {
         case (1): TheDatabase.put(id, new TechnicalStudy(id, firstName, secondName, birthDate)); break;
         case (2): TheDatabase.put(id, new HumanitarianStudy(id, firstName, secondName, birthDate)); break;
@@ -303,7 +302,6 @@ public class Database {
     public void generalAvg() {
       int numberTech = 0, numberHum = 0;
       double sumTech = 0.0, sumHum =0.0;
-      double prumTech = 0, prumHum = 0;
       for(int id = 0; id < numberOfStudents; id++) {
         if(getStudent(id)==null) continue;
         if(((AbsStudent)getStudent(id)).getAverage()==0) continue;
@@ -311,25 +309,23 @@ public class Database {
           numberTech++;
           sumTech = sumTech + ((AbsStudent)getStudent(id)).getAverage();
           //System.out.println("Tech pridano "+numberTech +" a prumer: "+((AbsStudent)getStudent(id)).getAverage()+" to je "+sumTech);
-          prumTech = sumTech/numberTech;
         } 
         if((getStudent(id) instanceof HumanitarianStudy) || (getStudent(id) instanceof CombinedStudy)) {
           numberHum++;
           sumHum = sumHum + ((AbsStudent)getStudent(id)).getAverage();
           //System.out.println("Hum pridano "+numberHum +" a prumer: "+((AbsStudent)getStudent(id)).getAverage()+" to je "+sumHum);
-          prumHum = sumHum/numberHum;
         }
       }
         if(numberTech!=0) {
           //System.out.println("prumTech: "+prumTech);
-          System.out.printf("General average grades from Technical Studies is: %4.3f\n", prumTech);
+          System.out.printf("General average grades from Technical Studies is: %4.3f\n", sumTech/numberTech);
           
       } else {
         System.out.println("There are no students in Technical Studies");
       }
       if(numberHum!=0) {
         //System.out.println("prumHum: "+prumHum);
-        System.out.printf("General average grades from Humanitarian Studies is: %.3f\n", prumHum);
+        System.out.printf("General average grades from Humanitarian Studies is: %.3f\n", sumHum/numberHum);
       } else {
         System.out.println("There are no students in Humanitarian Studies");
       }
@@ -356,60 +352,66 @@ public class Database {
     //i)  
     
     public void loadDatabase(String fileName) {
-      System.out.println("step 0");
+      //System.out.println("step 0");
       FileReader fReader = null;
       BufferedReader bfReader = null;
       try {
-        System.out.println("step 1");
+        //System.out.println("step 1");
         fReader = new FileReader(fileName+".txt");
-        System.out.println("step 2");
+        //System.out.println("step 2");
         bfReader = new BufferedReader(fReader);
-        System.out.println("step 3");
+        //System.out.println("step 3");
         String oneLine = bfReader.readLine();
         String seppartor1 = " ",seppartor2 = ";";
         String firstName, secondName, type;
         int id;
         LocalDate birthDate;
-        String []entry = oneLine.split(seppartor1);
-        System.out.println("geegee");
+        String[] entry = oneLine.split(seppartor1);
+        //System.out.println("geegee");
+        int amount = Integer.parseInt(entry[1]);
         if (entry.length == 2) {
-          System.out.println("step 4");
-          System.out.println("Amount of students in database "+fileName+" is "+entry[1]);
+          //System.out.println("step 4");
+          System.out.println("Amount of students in database "+fileName+" is "+amount);
         }
-        for(int i = 0; i < Integer.parseInt(entry[1]); i++) {
+        for(int i = 0; i < amount; i++) {
           oneLine = bfReader.readLine();
-          System.out.println("step 5");
+          //System.out.println("step 5");
           entry = oneLine.split(seppartor2);
-          System.out.println("step 6");
-          if (entry.length == 6) {
-            System.out.println("step 7");
-            id = Integer.parseInt(entry[0]);
-            System.out.println(id);
-            firstName = entry[1];
-            System.out.println(firstName);
+          //System.out.println(entry[6]);
+          //System.out.println("step 6");
+          //System.out.println(entry.length);
+          id = Integer.parseInt(entry[0]);
+          firstName = entry[1];
             secondName = entry[2];
-            System.out.println(secondName);
-            //birthDate = LocalDate.parse(entry[3]);
-            birthDate = LocalDate.parse("2000-07-06");
-            System.out.println(birthDate);
+            birthDate = LocalDate.parse(entry[3]);
             type = entry[5];
-            System.out.println(type);
+          if (id != numberOfStudents) {System.out.println("adding to nmbStudens: "+numberOfStudents+ " ->"+" id: "+id);numberOfStudents=id;}
+          if (entry.length == 7) {
+            
             switch(type) {
-              case ("TechnicalStudy"): addStudent(1, firstName, secondName, birthDate);
-              stalkStudent(0);
-              break;
-              case ("HumanitarianStudy"): addStudent(2, firstName, secondName, birthDate); break;
-              case ("CombinedStudy"): addStudent(3, firstName, secondName, birthDate); break;
-              default : System.out.println("invalid type of study"); break;
+              case "TechnicalStudy": addStudent(1, firstName, secondName, birthDate);
+                break;
+              case "HumanitarianStudy": addStudent(2, firstName, secondName, birthDate);
+                break;
+              case "CombinedStudy": addStudent(3, firstName, secondName, birthDate); 
+                break;
+              default : System.out.println("invalid type of study"); 
+                break;
+            }
+            entry = entry[6].split(seppartor1);
+            }
+            for (int y = 0; y < entry.length; y++) {
+              ((AbsStudent)getStudent(id)).addGrade(Integer.parseInt(entry[y]));
             }
             
+            
           }
-          
-        }
+        
+        
 
       } catch (Exception e) {
         System.out.println("weeee, i am falling");
-        System.out.println("and why you ask?\nthis is why: " + e.toString());
+        System.out.println("and why? you ask\nthis is why: " + e.toString());
       
       }
     }
@@ -427,6 +429,9 @@ public class Database {
         for (int id = 0; id < numberOfStudents; id++) {
           if (((AbsStudent)getStudent(id))!=null) {
             bWriter.write(printStudent(id));
+            if(((AbsStudent)getStudent(id)).getGrade(0)!=null) {
+            bWriter.write(";"+((AbsStudent)getStudent(id)).getGrades());
+          }
             bWriter.newLine();
           }
         }

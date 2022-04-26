@@ -21,7 +21,7 @@ public class AppTestS3 {
         db.addStudent(3, "Hlex", "Hhlex", LocalDate.parse("6666-07-06"));
         db.addStudent(1, "Ilex", "Hilex", LocalDate.parse("8888-07-06"));
         db.addStudent(3, "Jlex", "Hjlex", LocalDate.parse("9999-07-06"));
-
+        db.addStudent(3, "Klex", "Hklex", LocalDate.parse("9999-07-06"));
         
         
         for(int idx = 0; idx < Database.numberOfStudents; idx++ ) {
@@ -39,9 +39,9 @@ public class AppTestS3 {
             System.out.println("mezera");
             
         db.listOfStudents();
-        //db.deleteStudent(0);
-        //db.deleteStudent(4);
-        //db.deleteStudent(2);
+        db.deleteStudent(0);
+        db.deleteStudent(4);
+        db.deleteStudent(2);
         //db.listOfStudents();
         
         db.listOfStudents();
