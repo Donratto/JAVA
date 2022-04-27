@@ -4,7 +4,7 @@ import java.util.InputMismatchException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-import Program.Exceptions.gradeExceptions;
+import Program.Exceptions.inputRangeExceptions;
 
 public abstract class AbsStudent {
     
@@ -67,7 +67,7 @@ public abstract class AbsStudent {
             return null;
         }
     }
-    public void setGrade(Integer idx, Integer number) throws gradeExceptions{
+    public void setGrade(Integer idx, Integer number) throws inputRangeExceptions{
         if(number >= 1 && number <= 5) {
             this.grades.set(idx, number);
         }
@@ -143,40 +143,32 @@ public abstract class AbsStudent {
         System.err.println("Enter only one number from: {1, 2, 3, 4, 5}");
     }
 
-    public static int IntInput(Scanner sc, int maxNumber) 
-	{
+    public static int IntInput(Scanner sc, int maxNumber, int minNumber) {
 		int number = 0;
-		try
-		{
-            if (maxNumber==5){ 
-                System.out.printf("enter int: ");
-                number = sc.nextInt();
-                if((number < 1 || number > 5)) {
-                    throw new gradeExceptions();
+		try {
+            number = sc.nextInt();
+            if((number < minNumber || number > maxNumber)) {
+                    throw new inputRangeExceptions();
                 }
-            } else if (maxNumber==3) {
-                System.out.printf("enter int: ");
-                number = sc.nextInt();
-                if((number < 1 || number > 3)) {
-                    System.out.printf("Enter only one number from: {1, 2, 3}: \n");
-                    sc.nextLine();
-                    IntInput(sc,maxNumber);
-                }
-            }
+           
 		}
-		catch(InputMismatchException e)
-		{
+		catch(InputMismatchException e) {
 			System.out.println("Exception has occured: "+e.toString());
-			System.out.printf("Enter only integers: \n");
+			System.out.printf("Enter only integers! \n");
 			sc.nextLine();
-			number = IntInput(sc,maxNumber);
+			number = IntInput(sc,maxNumber,minNumber);
 		}
-        catch(gradeExceptions e) 
-        {
+        catch(inputRangeExceptions e) {
             System.out.println("chytám: " +e.toString());
-            System.out.printf("Enter only one number from: {1, 2, 3, 4, 5}: \n");
+            StringBuilder stringExcp = new StringBuilder("Enter only one number from: {");
+            for(int i = minNumber; i <= maxNumber; i++) {
+                stringExcp.append(i);
+                if(i!=maxNumber) stringExcp.append(" ");
+            }
+            stringExcp.append("}\n");
+            System.out.println(stringExcp);
             sc.nextLine();
-            number = IntInput(sc,maxNumber);
+            number = IntInput(sc,maxNumber,minNumber);
         }
 		return number;
 	}

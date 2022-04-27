@@ -24,7 +24,7 @@ public class AppTestS1 {
         
         for (int i = 0; i < 4; i++) {
         System.out.println("enter grade number " + (i+1));
-        Alex.addGrade(AbsStudent.IntInput(sc,1));
+        Alex.addGrade(AbsStudent.IntInput(sc,5,1));
         }
         
         

@@ -52,7 +52,7 @@ public class ZodiacTest {
             db.addStudent(2, "firstName", "secondName", dateHelp);
             
             
-            System.err.println(dateHelp.getDayOfYear()+" "+dateHelp+" -> "+db.skillStudentSmazat(i-1)+" VS "+db.skillStudent(i-1));
+            System.err.println(dateHelp.getDayOfYear()+" "+dateHelp+" -> "+db.skillStudent(i-1));
         }
 
 
@@ -67,6 +67,8 @@ public class ZodiacTest {
         }
         return _d;
     }
+
+    
     
 
 

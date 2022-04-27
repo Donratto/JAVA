@@ -9,7 +9,7 @@ public class AppTestS301 {
         var db = new Database();
         db.loadDatabase("fileNameTest01");
         db.saveDatabase("fileNameTest02");
-        System.out.print(db.ActuallNumberOfStudents());
+        System.out.print("actuall number of students: "+db.ActuallNumberOfStudents());
         System.err.println(" and id of next student: "+Database.nextStudentId);
 
         
