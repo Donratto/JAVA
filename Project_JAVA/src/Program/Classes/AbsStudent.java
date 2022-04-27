@@ -4,7 +4,7 @@ import java.util.InputMismatchException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-import Program.Exceptions.inputRangeExceptions;
+import Program.Exceptions.InputRangeExceptions;
 
 public abstract class AbsStudent {
     
@@ -67,7 +67,7 @@ public abstract class AbsStudent {
             return null;
         }
     }
-    public void setGrade(Integer idx, Integer number) throws inputRangeExceptions{
+    public void setGrade(Integer idx, Integer number) throws InputRangeExceptions{
         if(number >= 1 && number <= 5) {
             this.grades.set(idx, number);
         }
@@ -148,7 +148,7 @@ public abstract class AbsStudent {
 		try {
             number = sc.nextInt();
             if((number < minNumber || number > maxNumber)) {
-                    throw new inputRangeExceptions();
+                    throw new InputRangeExceptions();
                 }
            
 		}
@@ -158,7 +158,7 @@ public abstract class AbsStudent {
 			sc.nextLine();
 			number = IntInput(sc,maxNumber,minNumber);
 		}
-        catch(inputRangeExceptions e) {
+        catch(InputRangeExceptions e) {
             System.out.println("chytám: " +e.toString());
             StringBuilder stringExcp = new StringBuilder("Enter only one number from: {");
             for(int i = minNumber; i <= maxNumber; i++) {

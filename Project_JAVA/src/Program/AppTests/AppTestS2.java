@@ -12,7 +12,8 @@ import Program.javaDatabase.Database;
 
 public class AppTestS2 {
     public static void main(String[] args) throws Exception {
-        Scanner sc = new Scanner(System.in);
+        try (Scanner sc = new Scanner(System.in)) {
+        }
         var db = new Database(); 
 
         db.addStudent(1, "Alex", "Halex", LocalDate.parse("2000-07-06"));

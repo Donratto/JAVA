@@ -5,7 +5,8 @@ import Program.javaDatabase.Database;
 
 public class AppTestS301 {
     public static void main(String[] args) throws Exception {
-        Scanner sc = new Scanner(System.in);
+        try (Scanner sc = new Scanner(System.in)) {
+        }
         var db = new Database();
         db.loadDatabase("fileNameTest01");
         db.saveDatabase("fileNameTest02");

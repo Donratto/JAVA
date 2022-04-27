@@ -17,7 +17,7 @@ import Program.Classes.TechnicalStudy;
 public class Database {
     
     private HashMap<Integer, AbsStudent> TheDatabase;
-    public static int nextStudentId = 0;
+    public static int nextStudentId = 1;
 
     public Database() {
         TheDatabase = new HashMap<Integer, AbsStudent>();
@@ -52,13 +52,13 @@ public class Database {
     }
 
     public int ActuallNumberOfStudents() {
-      int AcNmbStud = 0;
+      int ActualNumebStudents = 0;
       for (int id = 0; id < nextStudentId; id++) {
         if (getStudent(id)!=null) {
-          AcNmbStud++;
+          ActualNumebStudents++;
         }
       }
-      return AcNmbStud;
+      return ActualNumebStudents;
     }
 
 

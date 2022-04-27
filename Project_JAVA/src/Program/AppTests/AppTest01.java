@@ -37,7 +37,6 @@ public class AppTest01 {
                     12. list grades of a student
                     Choose required action:\t""");
             choice  = AbsStudent.IntInput(sc,12,0);
-            //choice = AbsStudent.IntInput(sc);
             if((choice > 1 && choice < 9) && emptyDb(db)) continue;
             switch (choice) {
                 case (0):
@@ -63,6 +62,11 @@ public class AppTest01 {
                 case (2):
                     Boolean _run = true;
                     id = inputId(sc);
+                    if(db.getStudent(id)==null) {
+                        System.out.println(id+" this student ceased to exist");
+                        spacer(1);
+                        break;
+                    }
                 while (_run) {
                     System.out.print("enter grade: ");
                     db.addGrade(id, AbsStudent.IntInput(sc, 5, 1));
@@ -81,9 +85,14 @@ public class AppTest01 {
                     spacer(1);
                     break;
                 case (3): 
-                    System.out.println("buf"+choice);
                     spacer(1);
-                    db.deleteStudent(inputId(sc));
+                    id = inputId(sc);
+                    if(db.getStudent(id)==null) {
+                        System.out.println(id+" this student ceased to exist");
+                        spacer(1);
+                        break;
+                    }
+                    db.deleteStudent(id);
                     spacer(1);
                     break;
                 case (4):
@@ -93,8 +102,13 @@ public class AppTest01 {
                     break;
                 case (5): 
                     spacer(1);
-                    System.out.println("buf"+choice);
-                    System.out.print(db.skillStudent(inputId(sc)));
+                    id = inputId(sc);
+                    if(db.getStudent(id)==null) {
+                        System.out.println(id+" this student ceased to exist");
+                        spacer(1);
+                        break;
+                    }
+                    System.out.print(db.skillStudent(id));
                     spacer(1);
                     break;
                 case (6): 
@@ -165,6 +179,11 @@ public class AppTest01 {
                     spacer(1);
                     id =inputId(sc);
                     spacer(1);
+                    if(db.getStudent(id)==null) {
+                        System.out.println(id+" this student ceased to exist");
+                        spacer(1);
+                        break;
+                    }
                     db.stalkStudent(id);
                     spacer(1);
                     break;
@@ -174,7 +193,8 @@ public class AppTest01 {
                     id = inputId(sc);
                     spacer(1);
                     if(db.getStudent(id)==null) {
-                        System.out.println(id+" this entre ceased to exist");
+                        System.out.println(id+" this student ceased to exist");
+                        spacer(1);
                         break;
                     }
                     (db.getStudent(id)).listGrades();
@@ -203,7 +223,7 @@ public class AppTest01 {
     }
     private static int inputId(Scanner sc) {
         enterId();
-        return AbsStudent.IntInput(sc, Database.nextStudentId-1, 0);
+        return AbsStudent.IntInput(sc, Database.nextStudentId-1, 1);
     }
     private static boolean emptyDb(Database db) {
         int count = 0;

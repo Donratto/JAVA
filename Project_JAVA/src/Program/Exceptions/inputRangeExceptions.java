@@ -1,11 +1,11 @@
 package Program.Exceptions;
-public class inputRangeExceptions extends java.lang.Exception 
+public class InputRangeExceptions extends java.lang.Exception 
 {
-    public inputRangeExceptions()
+    public InputRangeExceptions()
     {
         super("Bad number input");
     }
-    public inputRangeExceptions(String chyba)
+    public InputRangeExceptions(String chyba)
     {
         super(chyba);
     }
