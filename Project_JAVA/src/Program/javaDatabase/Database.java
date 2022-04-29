@@ -1,6 +1,7 @@
 package Program.javaDatabase;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -235,9 +236,10 @@ public class Database {
       FileReader fReader = null;
       BufferedReader bfReader = null;
       try {
-        //System.out.println("step 1");
-        fReader = new FileReader(fileName+".txt");
-        //System.out.println("step 2");
+        String path =  "files" + File.separator + fileName;
+        File filePath = new File(path);
+        fReader = new FileReader(filePath + ".txt");
+        
         bfReader = new BufferedReader(fReader);
         //System.out.println("step 3");
         String oneLine = bfReader.readLine();
@@ -303,7 +305,9 @@ public class Database {
 
     public void saveDatabase(String fileName) {
       try {
-        FileWriter fWriter = new FileWriter(fileName + ".txt");
+        String path =  "files" + File.separator + fileName;
+        File filePath = new File(path);
+        FileWriter fWriter = new FileWriter(filePath + ".txt");
         BufferedWriter bWriter = new BufferedWriter(fWriter);
         bWriter.write(new String("AmountOfStudents " + ActuallNumberOfStudents()));
         bWriter.newLine();
@@ -319,7 +323,7 @@ public class Database {
         bWriter.close();
         fWriter.close();
       } catch (IOException e) {
-        System.out.println("Cannot create file named :"+fileName);
+        System.out.println("Cannot create file named: "+fileName);
       } catch (Exception e) {
         System.err.println("hello?? "+e.toString());
       }
