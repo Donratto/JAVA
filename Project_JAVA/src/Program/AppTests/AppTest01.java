@@ -162,13 +162,19 @@ public class AppTest01 {
                             break;
                         case 1:
                             spacer(1);
-                            System.out.println("No thing");
-                            
+                            if(db.loadSQL()){
+                                System.out.println("SQL database has been loaded");
+                            } else {
+                                System.out.println("SQL error");
+                            }   
                             break;
                         case 2:
                             spacer(1);
-                            System.out.println("Nothing");
-                            
+                            if(db.saveSQL()) {
+                                System.out.println("SQL database has been saved");
+                            } else {
+                                System.out.println("SQL error");
+                            }
                             break;
                         
                     }

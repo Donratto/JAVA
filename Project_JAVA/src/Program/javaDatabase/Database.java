@@ -7,18 +7,22 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import Program.Classes.AbsStudent;
 import Program.Classes.CombinedStudy;
 import Program.Classes.HumanitarianStudy;
 import Program.Classes.TechnicalStudy;
+import databaseSQL.queries.InsertQueries;
+import databaseSQL.queries.SelectQueries;
 
 
 public class Database {
     
     private HashMap<Integer, AbsStudent> TheDatabase;
     public static int nextStudentId = 1;
+    String separator1 = " ",separator2 = ";";
 
     public Database() {
         TheDatabase = new HashMap<Integer, AbsStudent>();
@@ -232,7 +236,6 @@ public class Database {
     //i)  
     
     public void loadDatabase(String fileName) {
-      //System.out.println("step 0");
       FileReader fReader = null;
       BufferedReader bfReader = null;
       try {
@@ -241,34 +244,24 @@ public class Database {
         fReader = new FileReader(filePath + ".txt");
         
         bfReader = new BufferedReader(fReader);
-        //System.out.println("step 3");
         String oneLine = bfReader.readLine();
-        String seppartor1 = " ",seppartor2 = ";";
+        
         String firstName, secondName, type;
         int id;
         LocalDate birthDate;
-        String[] entry = oneLine.split(seppartor1);
-        //System.out.println("geegee");
+        String[] entry = oneLine.split(separator1);
         int amount = Integer.parseInt(entry[1]);
         if (entry.length == 2) {
-          //System.out.println("step 4");
-          //System.out.println("Amount of students in database "+fileName+" is "+amount);
         }
         for(int i = 0; i < amount; i++) {
           oneLine = bfReader.readLine();
-          //System.out.println("step 5");
-          entry = oneLine.split(seppartor2);
-          //System.out.println(entry[6]);
-          //System.out.println("step 6");
-          //System.out.println(entry.length);
+          entry = oneLine.split(separator2);
           id = Integer.parseInt(entry[0]);
           firstName = entry[1];
             secondName = entry[2];
             birthDate = LocalDate.parse(entry[3]);
             type = entry[5];
-          if (id != nextStudentId) {
-            //System.out.println("adding to nmbStudens: "+nextStudentId+ " ->"+" id: "+id);
-            nextStudentId=id;}
+          if (id != nextStudentId) nextStudentId=id;
           if (entry.length == 7) {
             
             switch(type) {
@@ -281,21 +274,16 @@ public class Database {
               default : System.out.println("invalid type of study"); 
                 break;
             }
-            entry = entry[6].split(seppartor1);
+            entry = entry[6].split(separator1);
             }
             for (int y = 0; y < entry.length; y++) {
               getStudent(id).addGrade(Integer.parseInt(entry[y]));
             }
-            
-            
           }
-        
-        
         } catch (IOException e) {
-          System.out.println(e.toString());
+          System.out.println("invalid file: "+e.toString());
       } catch (Exception e) {
-        System.out.println("weeee, i am falling");
-        System.out.println("and why? you ask\nthis is why: " + e.toString());
+        System.out.println("invalid file: "+e.toString());
       
       }
     }
@@ -325,7 +313,77 @@ public class Database {
       } catch (IOException e) {
         System.out.println("Cannot create file named: "+fileName);
       } catch (Exception e) {
-        System.err.println("hello?? "+e.toString());
+        System.err.println(e.toString());
+      }
+    }
+
+
+    public boolean loadSQL(){
+      try {
+        String firstName, secondName, type, mainEntry[], entry[];
+        int id, grade;
+        LocalDate birthDate;
+        mainEntry = SelectQueries.getStudentsFromStudents().split(separator2);
+        for(int i = 0; i < mainEntry.length; i++){
+          entry = mainEntry[i].split(separator1);
+          while(entry[0]!="") {
+            id = Integer.parseInt(entry[0]);
+            type = entry[1];
+            firstName = entry[2];
+            secondName = entry[3];
+            birthDate = LocalDate.parse(entry[4]);
+            if (id != nextStudentId) nextStudentId=id;
+
+              switch(type) {
+                case "TechnicalStudy": addStudent(1, firstName, secondName, birthDate);
+                  break;
+                case "HumanitarianStudy": addStudent(2, firstName, secondName, birthDate);
+                  break;
+                case "CombinedStudy": addStudent(3, firstName, secondName, birthDate); 
+                  break;
+                default : System.out.println("invalid type of study"); 
+                  break;
+              }
+
+
+              
+            }
+
+          
+          }
+          mainEntry = SelectQueries.getGradesFromGrades().split(separator1);
+          for(int y = 0; y < mainEntry.length; y++){
+            entry = mainEntry[y].split(separator2);
+            while(entry[0]!="") {
+              id = Integer.parseInt(entry[0]);
+              if(!(TheDatabase.containsKey(id))) continue;
+              grade = Integer.parseInt(entry[1]);
+              getStudent(id).addGrade(grade);
+            }
+          
+        }
+        return true;
+      } catch (Exception e) {
+        return false;
+      
+      }
+    }
+
+    public boolean saveSQL(){
+      try {
+        for (int id = 0; id < nextStudentId; id++) {
+          if (getStudent(id)!=null) {
+            
+            String fName = getStudent(id).getFirstName();
+            String sName = getStudent(id).getSecondName();
+            String birthDate =  ""+(TheDatabase.get(id).getBirthDate());
+            String type = " {type="+TheDatabase.get(id).getClass().getSimpleName()+"}";
+            InsertQueries.insertNewStudent(id,fName,sName,birthDate,type);
+          }
+        }
+        return true;
+      }catch (Exception e) {
+        return false;
       }
     }
 
